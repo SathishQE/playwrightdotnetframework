@@ -1,5 +1,5 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
+const {test, expect } = require('@playwright/test');
 const { fail } = require('assert');
 const BooleanPageExtenstions = require ('../SwagLabs.Automation.Extensions/BooleanPageExtenstions');
 const SetPageExtenstions = require('../SwagLabs.Automation.Extensions/SetPageExtenstions');
@@ -9,15 +9,22 @@ const GetPageExtenstions = require('../SwagLabs.Automation.Extensions/GetPageExt
 const LoginPageConstants = require('../SwagLabs.Automation.Constants/LoginPageConstants');
 const HomePageConstants = require('../SwagLabs.Automation.Constants/HomePageConstants');
 
+test.describe.configure({mode: "serial"});
 
-test.describe('UI: Checkout Workflow', ()=>{
+  let page;
 
   let booleanPageExtenstion;
   let setPageExtenstion;
   let clickPageExtension;
   let getPageExtension;
+  
+test.describe('Product Checkout', ()=>{
 
-  test.beforeEach(async({page})=>{
+  test.beforeAll(async({browser})=>{
+
+    page = await browser.newPage();
+
+    
 
     booleanPageExtenstion = new BooleanPageExtenstions(page);
     setPageExtenstion = new SetPageExtenstions(page);
@@ -38,7 +45,7 @@ test.describe('UI: Checkout Workflow', ()=>{
   
   });
   
-  test('ProductCheckOut', async({page})=>{
+  test('ProductCheckOut', async()=>{
     //verify home page url
     let homepageUrl = await page.url();
     console.log(homepageUrl)
@@ -75,13 +82,28 @@ test.describe('UI: Checkout Workflow', ()=>{
     await clickPageExtension.ClickButtonByIdAsync(HomePageConstants.BackHomeButtonId);
   });
 
-  test.afterEach('Verify Home Page Url', async ({ page }) => {
+  test('has title1', async()=>{
+    console.log("Print 1");
+  });
+
+  test('has title2', async()=>{
+    console.log("Print 2");
+  });
+
+  test('has title3', async()=>{
+    console.log("Print 3");
+  });
+
+  test.afterAll('Verify Home Page Url', async () => {
     
     //close browser instance
       await page.close();
   
   });
 
+
 });
+
+  
 
 
